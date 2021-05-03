@@ -91,4 +91,30 @@ public class SQLiteDatabase {
 		}
 		return clients;
 	}
+	
+	public void editClientInDatabase(int id, String vorname, String nachname, String adresse, String wohnort,
+			String postleitzahl, String telefonnummer) {
+		try {
+			// verbindung zur DB-Datei aufbauen
+			Class.forName("org.sqlite.JDBC");
+			connection = DriverManager.getConnection("jdbc:sqlite:" + dbPath);
+			connection.setAutoCommit(false);
+			System.out.println("Opened database successfully");
+
+			// statement setzen
+			statement = connection.createStatement();
+			String sql = "UPDATE KundenData SET vorname = '" + vorname + "',nachname = '" + nachname + "',adresse = '" + adresse + "',wohnort = '" + wohnort + "',postleitzahl = '" + postleitzahl + "',telefonnummer = '" + telefonnummer + "'  WHERE id = '" + id + "';";
+			// Daten in die Datenbank schreiben
+			statement.execute(sql);
+			// statement schliessen
+			statement.close();
+			// verbindung beenden
+			connection.commit();
+			connection.close();
+
+		} catch (Exception e) {
+			System.err.println(e.getClass().getName() + ": " + e.getMessage());
+			System.exit(0);
+		}
+	}
 }

@@ -8,11 +8,13 @@ public class mainProg {
 		
 		System.out.println(db);
 		
-		db.getClientsFromDatabase();
 		
-		db.insertClientToDatabase("Nils", "Wegner", "Musterstraße 1", "Musterstadt", "12345", "12345/6789");
-		
-		db.getClientsFromDatabase();
+		new MainMenu();
+//		db.getClientsFromDatabase();
+//		
+//		db.insertClientToDatabase("Nils", "Wegner", "Musterstraße 1", "Musterstadt", "12345", "12345/6789");
+//		
+//		db.getClientsFromDatabase();
 
 	}
 

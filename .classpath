@@ -6,6 +6,6 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Sascha/eclipse-workspace/AEW_Project_2/src/Kundenverwaltung/sqlite-jdbc-3.34.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sgroe/eclipse-workspace/AEW_Project_2/src/Kundenverwaltung/sqlite-jdbc-3.34.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

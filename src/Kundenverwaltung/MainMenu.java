@@ -44,11 +44,30 @@ public class MainMenu {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					MainMenu window = new MainMenu();
+//					window.frmKundenverwaltung.setVisible(true);
+//
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
+
+	/**
+	 * Create the application.
+	 */
+	public MainMenu() {
+		initialize();
+		MainMenu window = this;
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MainMenu window = new MainMenu();
+					
 					window.frmKundenverwaltung.setVisible(true);
 
 				} catch (Exception e) {
@@ -56,13 +75,6 @@ public class MainMenu {
 				}
 			}
 		});
-	}
-
-	/**
-	 * Create the application.
-	 */
-	public MainMenu() {
-		initialize();
 	}
 
 	/**
@@ -368,6 +380,7 @@ public class MainMenu {
 			// Adresse-Textfeld //
 			JTextField textPostleitzahl = new JTextField();
 			textPostleitzahl.setBounds(115, 70, 300, 20);
+			textPostleitzahl.setText((String) table.getValueAt(indexToChange, 5));
 			editClient.add(textPostleitzahl);
 
 			///////////////////////////////////
@@ -382,6 +395,7 @@ public class MainMenu {
 			// Adresse-Textfeld //
 			JTextField textWohnort = new JTextField();
 			textWohnort.setBounds(115, 90, 300, 20);
+			textWohnort.setText((String) table.getValueAt(indexToChange, 4));
 			editClient.add(textWohnort);
 
 			///////////////////////////////////
@@ -396,17 +410,18 @@ public class MainMenu {
 			// Adresse-Textfeld //
 			JTextField textTelefonnummer = new JTextField();
 			textTelefonnummer.setBounds(115, 110, 300, 20);
+			textTelefonnummer.setText((String) table.getValueAt(indexToChange, 6));
 			editClient.add(textTelefonnummer);
 
 			//////////////////
 			// Submitbutton //
 			//////////////////
-			JButton submitButton = new JButton("Kunden Anlegen!");
+			JButton submitButton = new JButton("Kunden ändern!");
 			submitButton.setBounds(115, 130, 150, 50);
 			submitButton.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					addNewClient(textVorname.getText(), textNachname.getText(), textAdresse.getText(),
+					editClient((int)table.getValueAt(indexToChange, 0), textVorname.getText(), textNachname.getText(), textAdresse.getText(),
 							textWohnort.getText(), textPostleitzahl.getText(), textTelefonnummer.getText());
 					renewClientTable();
 					editClient.dispose();
@@ -425,6 +440,11 @@ public class MainMenu {
 	public void addNewClient(String vorname, String nachname, String adresse, String wohnort, String postleitzahl,
 			String telefonnummer) {
 		db.insertClientToDatabase(vorname, nachname, adresse, wohnort, postleitzahl, telefonnummer);
+	}
+	
+	public void editClient(int id, String vorname, String nachname, String adresse, String wohnort, String postleitzahl,
+			String telefonnummer) {
+		db.editClientInDatabase(id, vorname, nachname, adresse, wohnort, postleitzahl, telefonnummer);
 	}
 
 	public void handleSelectionEvent(ListSelectionEvent e) {
