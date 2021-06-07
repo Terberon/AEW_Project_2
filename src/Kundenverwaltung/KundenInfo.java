@@ -9,17 +9,12 @@ public class KundenInfo {
 
 	private Information info;
 
-	public KundenInfo(int id, InformationType type, String information) {
-		switch(type) {
-		case HARDWARE:
-			id = this.id;
-			break;
-		case SOFTWARE:
-			break;
-		case PASSWORD:
-			break;
-		case ACCOUNT:
-			break;
-		}
+	public KundenInfo(int id, InformationType type, String infoName, String username, String password) {
+		this.id = id;
+		this.info.setType(type.toString());
+		this.info.setInfoName(infoName);
+		this.info.setUsername(username);
+		this.info.setPassword(password);
+
 	}
 }

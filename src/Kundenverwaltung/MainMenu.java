@@ -41,33 +41,15 @@ public class MainMenu {
 	private SQLiteDatabase db = new SQLiteDatabase("test.db");
 	private JTable table;
 
-	/**
-	 * Launch the application.
-	 */
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					MainMenu window = new MainMenu();
-//					window.frmKundenverwaltung.setVisible(true);
-//
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
 
-	/**
-	 * Create the application.
-	 */
+
 	public MainMenu() {
 		initialize();
 		MainMenu window = this;
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					
+
 					window.frmKundenverwaltung.setVisible(true);
 
 				} catch (Exception e) {
@@ -83,12 +65,6 @@ public class MainMenu {
 	public void initialize() {
 		SQLiteDatabase db = new SQLiteDatabase("test.db");
 		System.out.println("Datenbank geladen");
-
-//		db.getClientsFromDatabase();
-
-//		db.insertClientToDatabase("Nils", "Wegner", "Musterstraﬂe 1", "Musterstadt", "12345", "12345/6789");
-//
-//		db.getClientsFromDatabase();
 
 		data = db.getClientsFromDatabase();
 
@@ -136,7 +112,7 @@ public class MainMenu {
 
 		table = new JTable(dataV, titles);
 		table.setRowHeight(35);
-		
+
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		ListSelectionModel selectionModel = table.getSelectionModel();
 		selectionModel.addListSelectionListener(new ListSelectionListener() {
@@ -147,13 +123,12 @@ public class MainMenu {
 
 		JScrollPane pane = new JScrollPane(table);
 
-		// table.setFillsViewportHeight(true);
 		panel.add(pane);
 
 		JButton btnAddClient = new JButton("Add Client");
 		btnAddClient.addActionListener(new addClient());
 		panel.add(btnAddClient);
-		
+
 		JButton btnEditClient = new JButton("Edit Client");
 		btnEditClient.addActionListener(new editClient());
 		panel.add(btnEditClient);
@@ -186,7 +161,6 @@ public class MainMenu {
 		titles.add("Postleitzahl");
 		titles.add("Telefonnummer");
 
-		
 		table.invalidate();
 		table.revalidate();
 		table.setModel(new DefaultTableModel(dataV, titles));
@@ -201,6 +175,7 @@ public class MainMenu {
 		}
 	}
 
+	// Funktion zum erstellen eines neuen Kunden
 	class addClient implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			createClient = new JDialog(frmKundenverwaltung, "Kunden Anlegen", ModalityType.APPLICATION_MODAL);
@@ -316,6 +291,7 @@ public class MainMenu {
 		}
 	}
 
+	// Funktion zum Editieren der Kundendaten
 	class editClient implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			editClient = new JDialog(frmKundenverwaltung, "Kunden bearbeiten", ModalityType.APPLICATION_MODAL);
@@ -421,8 +397,9 @@ public class MainMenu {
 			submitButton.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					editClient((int)table.getValueAt(indexToChange, 0), textVorname.getText(), textNachname.getText(), textAdresse.getText(),
-							textWohnort.getText(), textPostleitzahl.getText(), textTelefonnummer.getText());
+					editClient((int) table.getValueAt(indexToChange, 0), textVorname.getText(), textNachname.getText(),
+							textAdresse.getText(), textWohnort.getText(), textPostleitzahl.getText(),
+							textTelefonnummer.getText());
 					renewClientTable();
 					editClient.dispose();
 				}
@@ -436,34 +413,31 @@ public class MainMenu {
 
 		}
 	}
-	
+
 	public void addNewClient(String vorname, String nachname, String adresse, String wohnort, String postleitzahl,
 			String telefonnummer) {
 		db.insertClientToDatabase(vorname, nachname, adresse, wohnort, postleitzahl, telefonnummer);
 	}
-	
+
 	public void editClient(int id, String vorname, String nachname, String adresse, String wohnort, String postleitzahl,
 			String telefonnummer) {
 		db.editClientInDatabase(id, vorname, nachname, adresse, wohnort, postleitzahl, telefonnummer);
 	}
 
 	public void handleSelectionEvent(ListSelectionEvent e) {
-	    if (e.getValueIsAdjusting())
-	        return;
+		if (e.getValueIsAdjusting())
+			return;
 
-	    // e.getSource() returns an object like this
-	    // javax.swing.DefaultListSelectionModel 1052752867 ={11}
-	    // where 11 is the index of selected element when mouse button is released
+		// e.getSource() returns an object like this
+		// javax.swing.DefaultListSelectionModel 1052752867 ={11}
+		// where 11 is the index of selected element when mouse button is released
 
-	    String strSource= e.getSource().toString();
-	    int start = strSource.indexOf("{")+1,
-	        stop  = strSource.length()-1;
-	    int iSelectedIndex = Integer.parseInt(strSource.substring(start, stop));
-	    System.out.println(iSelectedIndex);
-	    System.out.println(table.getValueAt(iSelectedIndex, 0));
-	    indexToChange =  iSelectedIndex;
+		String strSource = e.getSource().toString();
+		int start = strSource.indexOf("{") + 1, stop = strSource.length() - 1;
+		int iSelectedIndex = Integer.parseInt(strSource.substring(start, stop));
+		System.out.println(iSelectedIndex);
+		System.out.println(table.getValueAt(iSelectedIndex, 0));
+		indexToChange = iSelectedIndex;
 	}
 
-	
 }
-
